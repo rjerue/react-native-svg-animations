@@ -9,6 +9,30 @@ import pick from "lodash/pick";
 
 import { listen, removeListeners } from "../AnimatedListener";
 
+type ResultArray = {
+  values: any[],
+  listeners: any[]
+};
+
+type ResultObject = {
+  values: Object,
+  listeners: Object
+};
+
+type ResultAnimated = {
+  values: number | string,
+  listeners: string
+};
+
+type ResultOther = {
+  values: any
+};
+
+type RecResult = ResultArray | ResultObject;
+
+type Result = RecResult | ResultAnimated | ResultOther;
+type AnimatedListener = Result;
+
 // https://github.com/react-native-community/react-native-svg/blob/master/lib/extract/extractBrush.js
 const patternReg = /^url\(#(.+?)\)$/;
 function extractBrush(colorOrBrush) {
@@ -86,7 +110,7 @@ const KEYS = ["fill", "stroke", "strokeDashoffset"];
 
 export default function SvgBrushFix(WrappedComponent) {
   return class extends Component {
-    strokeDasharray: any;
+    strokeDasharray: AnimatedListener;
     constructor(props) {
       super(props);
       this.updateCache(props);
