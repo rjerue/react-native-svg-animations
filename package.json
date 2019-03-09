@@ -13,11 +13,7 @@
     "type": "git",
     "url": "git@github.com:73R3WY/react-native-svg-animations.git"
   },
-  "keywords": [
-    "react-native",
-    "svg",
-    "animations"
-  ],
+  "keywords": ["react-native", "svg", "animations"],
   "author": "Jeremy Patrick Pacabis <jeremy@ingenuity.ph> (https://ingenuity.ph)",
   "license": "ISC",
   "bugs": {
@@ -25,7 +21,12 @@
   },
   "homepage": "https://github.com/73R3WY/react-native-svg-animations",
   "dependencies": {
+    "react": "16.8.4",
+    "react-art": "16.8.4",
+    "react-dom": "16.8.4",
     "react-native-svg": "^5.5.1",
-    "svg-path-properties": "^0.4.1"
+    "react-native-web": "0.10.1",
+    "svg-path-properties": "^0.4.1",
+    "svgs": "4.0.0"
   }
 }

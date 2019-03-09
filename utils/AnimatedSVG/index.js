@@ -1,14 +1,10 @@
-import {
-  Animated,
-} from 'react-native';
-import AnimatedSVGBrush from '../AnimatedSVGBrush';
-import AnimatedSVGPropString from '../AnimatedSVGPropString';
-import AnimatedSVGState from '../AnimatedSVGState';
-import AnimatedSVGTransform from '../AnimatedSVGTransform';
+import { Animated } from "react-native-web";
+import AnimatedSVGBrush from "../AnimatedSVGBrush";
+import AnimatedSVGPropString from "../AnimatedSVGPropString";
+import AnimatedSVGState from "../AnimatedSVGState";
+import AnimatedSVGTransform from "../AnimatedSVGTransform";
 
-function AnimatedSVG (Component, {
-  state, propString, keepXY
-} = {}) {
+function AnimatedSVG(Component, { state, propString, keepXY } = {}) {
   Component = AnimatedSVGState(Component, state);
   Component = AnimatedSVGBrush(Component);
   Component = AnimatedSVGPropString(Component, propString);

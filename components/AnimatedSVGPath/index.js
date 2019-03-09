@@ -1,19 +1,12 @@
-import React, {
-  PureComponent, Component,
-} from 'react';
-import PropTypes from 'prop-types';
-import Svg from 'react-native-svg';
-import {
-  Animated,
-  Dimensions,
-} from 'react-native';
-import {
-  svgPathProperties,
-} from 'svg-path-properties';
+import React, { PureComponent, Component } from "react";
+import PropTypes from "prop-types";
+import Svg from "svgs";
+import { Animated, Dimensions } from "react-native-web";
+import { svgPathProperties } from "svg-path-properties";
 
-import Path from '../AnimatedSVG';
+import Path from "../AnimatedSVG";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 class AnimatedSVGPath extends Component {
   static propTypes = {
     d: PropTypes.string.isRequired,
@@ -27,7 +20,7 @@ class AnimatedSVGPath extends Component {
     fill: PropTypes.string,
     loop: PropTypes.bool
   };
-  
+
   static defaultProps = {
     strokeColor: "black",
     strokeWidth: 1,
@@ -39,39 +32,35 @@ class AnimatedSVGPath extends Component {
     width,
     loop: true
   };
-  
+
   constructor(props) {
     super(props);
     const { d } = this.props;
-    const properties = svgPathProperties(d)
+    const properties = svgPathProperties(d);
     this.length = properties.getTotalLength();
     this.strokeDashoffset = new Animated.Value(this.length);
   }
 
   animate = () => {
-    const {
-      delay,
-      duration,
-      loop,
-    } = this.props;
+    const { delay, duration, loop } = this.props;
     this.strokeDashoffset.setValue(this.length);
     Animated.sequence([
       Animated.delay(delay),
       Animated.timing(this.strokeDashoffset, {
         toValue: 0,
-        duration: duration,
+        duration: duration
       })
     ]).start(() => {
       if (loop) {
-          this.animate();
+        this.animate();
       }
     });
-  }
+  };
 
   componentDidMount() {
     this.animate();
   }
-  
+
   render() {
     const {
       d,
@@ -80,13 +69,10 @@ class AnimatedSVGPath extends Component {
       width,
       height,
       strokeColor,
-      strokeWidth,
+      strokeWidth
     } = this.props;
     return (
-      <Svg
-        height={(height * scale) + 5}
-        width={(width * scale) + 5}
-      >
+      <Svg height={height * scale + 5} width={width * scale + 5}>
         <Path
           strokeDasharray={[this.length, this.length]}
           strokeDashoffset={this.strokeDashoffset}
@@ -105,5 +91,5 @@ class AnimatedSVGPath extends Component {
 
 module.exports = AnimatedSVGPath;
 module.exports.details = {
-  title: 'AnimatedSVGPath',
+  title: "AnimatedSVGPath"
 };

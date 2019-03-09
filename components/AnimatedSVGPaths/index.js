@@ -1,19 +1,12 @@
-import React, {
-  PureComponent, Component,
-} from 'react';
-import PropTypes from 'prop-types';
-import Svg from 'react-native-svg';
-import {
-  Animated,
-  Dimensions,
-} from 'react-native';
-import {
-  svgPathProperties,
-} from 'svg-path-properties';
+import React, { PureComponent, Component } from "react";
+import PropTypes from "prop-types";
+import Svg from "svgs";
+import { Animated, Dimensions } from "react-native-web";
+import { svgPathProperties } from "svg-path-properties";
 
-import Path from '../AnimatedPath';
+import Path from "../AnimatedPath";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 class AnimatedSVGPaths extends Component {
   static propTypes = {
     ds: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -24,9 +17,9 @@ class AnimatedSVGPaths extends Component {
     delay: PropTypes.number,
     width: PropTypes.number,
     scale: PropTypes.number,
-    fill: PropTypes.string,
+    fill: PropTypes.string
   };
-  
+
   static defaultProps = {
     strokeColor: "black",
     strokeWidth: 1,
@@ -35,13 +28,13 @@ class AnimatedSVGPaths extends Component {
     fill: "none",
     scale: 1,
     height,
-    width,
+    width
   };
-  
+
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     const {
       ds,
@@ -52,7 +45,7 @@ class AnimatedSVGPaths extends Component {
       strokeColor,
       strokeWidth,
       duration,
-      delay,
+      delay
     } = this.props;
 
     const svgPaths = ds.map((d, index) => {
@@ -71,10 +64,7 @@ class AnimatedSVGPaths extends Component {
     });
 
     return (
-      <Svg
-        height={(height * scale) + 5}
-        width={(width * scale) + 5}
-      >
+      <Svg height={height * scale + 5} width={width * scale + 5}>
         {svgPaths}
       </Svg>
     );
@@ -85,5 +75,5 @@ class AnimatedSVGPaths extends Component {
 
 module.exports = AnimatedSVGPaths;
 module.exports.details = {
-  title: 'AnimatedSVGPaths',
+  title: "AnimatedSVGPaths"
 };

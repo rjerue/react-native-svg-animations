@@ -1,5 +1,5 @@
 // @flow
-import { Animated } from 'react-native';
+import { Animated } from "react-native-web";
 
 type ResultArray = {
   values: any[],
@@ -38,20 +38,17 @@ function recursiveListen(
 ): RecResult {
   if (Array.isArray(object)) {
     let initialValue = new AnimatedTracker([], []);
-    return object.reduce(
-      (previousValue, currentValue, currentIndex, array) => {
-        const result = recursiveListen(
-          currentValue,
-          previousValue.values,
-          currentIndex,
-          cb
-        );
-        previousValue.values[currentIndex] = result.values;
-        previousValue.listeners[currentIndex] = result.listeners;
-        return previousValue;
-      },
-      initialValue
-    );
+    return object.reduce((previousValue, currentValue, currentIndex, array) => {
+      const result = recursiveListen(
+        currentValue,
+        previousValue.values,
+        currentIndex,
+        cb
+      );
+      previousValue.values[currentIndex] = result.values;
+      previousValue.listeners[currentIndex] = result.listeners;
+      return previousValue;
+    }, initialValue);
   }
   if (
     object instanceof Animated.Value ||
@@ -63,7 +60,7 @@ function recursiveListen(
       new ListenerTracker(id, object)
     );
   }
-  if (typeof object === 'object' && object !== null) {
+  if (typeof object === "object" && object !== null) {
     let initialValue = new AnimatedTracker({}, {});
     return Object.keys(object).reduce((previousValue, currentValue) => {
       const value = object[currentValue];
@@ -87,8 +84,8 @@ function addListenerForAnimated(
   cb: Function
 ) {
   const addListener = animatedValue._parent
-      ? animatedValue._parent.addListener.bind(animatedValue._parent)
-      : animatedValue.addListener.bind(animatedValue);
+    ? animatedValue._parent.addListener.bind(animatedValue._parent)
+    : animatedValue.addListener.bind(animatedValue);
   const interpolator = animatedValue._interpolation;
   let callback = e => e;
   if (interpolator) {
@@ -103,7 +100,7 @@ function addListenerForAnimated(
   return addListener(callback);
 }
 export function listen(object: Object | any[], cb: Function): Result {
-    return recursiveListen(object, null, null, cb);
+  return recursiveListen(object, null, null, cb);
 }
 
 /**
@@ -111,16 +108,14 @@ export function listen(object: Object | any[], cb: Function): Result {
  */
 function recursiveRemoveListeners(listeners: Object | any[]) {
   if (Array.isArray(listeners)) {
-    listeners.forEach((listener, index) =>
-      recursiveRemoveListeners(listener)
-    );
+    listeners.forEach((listener, index) => recursiveRemoveListeners(listener));
   } else if (listeners instanceof ListenerTracker) {
     const id = listeners.id;
     const object = listeners.object;
     object._parent
-        ? object._parent.removeListener(id)
-        : object.removeListener(id);
-  } else if (typeof listeners === 'object' && listeners !== null) {
+      ? object._parent.removeListener(id)
+      : object.removeListener(id);
+  } else if (typeof listeners === "object" && listeners !== null) {
     Object.keys(listeners).forEach(key =>
       recursiveRemoveListeners(listeners[key])
     );
